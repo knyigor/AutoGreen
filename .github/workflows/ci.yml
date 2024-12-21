@@ -20,10 +20,10 @@ jobs:
 
       - name: Random Update
         id: random
-        run: echo "::set-output name=bool::$(($RANDOM % 2))"
+        run: echo "bool=$(($RANDOM % 2))" >> $GITHUB_ENV
 
       - name: Auto green
-        if: steps.random.outputs.bool == '1'
+        if: ${{ env.bool == '1' }}
         run: |
           git config --local user.email "knyigor@gmail.com"
           git config --local user.name "knyigor"
