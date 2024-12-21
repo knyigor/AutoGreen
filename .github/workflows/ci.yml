@@ -1,4 +1,3 @@
-
 name: ci
 
 on:
@@ -11,19 +10,23 @@ on:
 jobs:
   autogreen:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+  
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Random
+      - name: Random Update
         id: random
         run: echo "::set-output name=bool::$(($RANDOM % 2))"
 
       - name: Auto green
         if: steps.random.outputs.bool == '1'
         run: |
-          git config --local user.email "Xistorg@Gmail.com"
-          git config --local user.name "Xistorg"
+          git config --local user.email "knyigor@gmail.com"
+          git config --local user.name "knyigor"
           git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git pull --rebase
           git commit --allow-empty -m "a commit a day keeps your girlfriend away"
